@@ -1,0 +1,56 @@
+<!doctype html>
+
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+
+<div>
+  <div>
+    Lewa strona
+    <input type="text"/> na timestamp <br>
+    <input type="text"/> inputy na dzien-miesiac-rok - minuta, godzina sekunda
+  </div>
+  <div>
+    Prawa strona
+    Wyswietla sie timestamp<br>
+    Wyswietla sie Dzien miesiac rok - minuta, godzina sekunda
+  </div>
+</div>
+
+
+<div>
+  <input id="box" type="text"/><br/>
+  <p id="date"></p>
+</div>
+
+<script>
+  const box = document.querySelector('#box');
+  const date = document.querySelector('#date');
+  box.addEventListener('change', function () {
+    const value = this.value;
+    date.innerHTML = timestampToDate(value);
+  });
+
+
+  function timestampToDate(unix_timestamp) {
+    const a = new Date(unix_timestamp * 1000);
+    const months = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
+    const year = a.getFullYear();
+    // const month = months[a.getMonth()];
+    const month = a.getMonth();
+    const date = a.getDate();
+    const hour = a.getHours();
+    const min = a.getMinutes();
+    const sec = a.getSeconds();
+    return `${date}.${month}.${year} ${hour}:${min}:${sec}`;
+  }
+
+
+</script>
+
+
+</body>
+</html>

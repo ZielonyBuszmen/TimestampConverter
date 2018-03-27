@@ -6,6 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
   <link rel="stylesheet" href="css/bootstrap.min.css">
+  <style>
+    .form-control.width-2 {
+      width: 3em;
+    }
+
+    .form-control.width-4 {
+      width: 5em;
+    }
+
+    .width-100 {
+      width: 10em;
+    }
+  </style>
 </head>
 
 <body>
@@ -29,7 +42,7 @@
               <input class="form-control form-control-lg" type="text" placeholder="timestamp" id="timestamp-input"
                      maxlength="12">
               <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="submit">Go!</button>
+                <button class="btn btn-secondary width-100" type="submit">Go!</button>
               </div>
             </div>
           </form>
@@ -45,7 +58,22 @@
           Date ➔ Timestamp
         </div>
         <div class="card-body">
+          <form action="#" id="date-form" class="form-inline">
+            <div class="input-group my-3">
+              <input type="text" class="form-control form-control-lg width-2" maxlength="2" placeholder="D"
+                     id="date-day">
+              <input type="text" class="form-control form-control-lg width-2" maxlength="2" placeholder="M"
+                     id="date-month">
+              <input type="text" class="form-control form-control-lg width-4" maxlength="5" placeholder="Year"
+                     id="date-year">
+              <div class="input-group-append">
+                <button class="btn btn-secondary width-100" type="submit">Go!</button>
+              </div>
+            </div>
+            <button type="button" class="btn btn-lg btn-warning mx-3">Today</button>
+          </form>
 
+          <h2 class="mx-3" id="date-to-timestamp-result">&nbsp;</h2>
         </div>
       </div>
 
@@ -62,10 +90,24 @@
     timestampToDateResult.innerHTML = timestampToDate(timestampValue);
   };
 
+  const dateChanged = (e) => {
+    e.preventDefault();
+    const day = document.querySelector('#date-day').value || 1;
+    const month = document.querySelector('#date-month').value || 1;
+    const year = document.querySelector('#date-year').value || 1970;
+    const dateToTimestamp = document.querySelector('#date-to-timestamp-result');
+    // dateToTimestamp.innerHTML = `${day} - ${month} - ${year}`;
+    const newDate = `${month}/${day}/${year}`;
+    dateToTimestamp.innerHTML = Date.parse(newDate) / 1000;
+  };
+
   // dodanie listenerów do inputu i do samego formularza
   document.getElementById('timestamp-form').addEventListener('submit', timestampChanged);
   document.getElementById('timestamp-input').addEventListener('change', timestampChanged);
   document.getElementById('timestamp-input').focus();
+
+  document.getElementById('date-form').addEventListener('submit', dateChanged);
+  document.getElementById('date-year').addEventListener('change', dateChanged);
 
 
   function timestampToDate(unix_timestamp) {
@@ -74,7 +116,7 @@
     const months = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
     const year = a.getFullYear();
     // const month = months[a.getMonth()];
-    const month = addLeadingZero(a.getMonth());
+    const month = addLeadingZero(a.getMonth() + 1); // +1, because returns month from 0
     const date = a.getDate();
     const hour = a.getHours();
     const min = addLeadingZero(a.getMinutes());

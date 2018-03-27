@@ -55,6 +55,7 @@
 <script>
 
   const timestampChanged = (e) => {
+    e.preventDefault();
     const timestampValue = document.querySelector('#timestamp-input').value;
     const timestampToDateResult = document.querySelector('#timestamp-to-date-result');
     timestampToDateResult.innerHTML = timestampToDate(timestampValue);

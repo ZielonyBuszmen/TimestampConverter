@@ -3,51 +3,82 @@
 <html lang="pl">
 <head>
   <meta charset="utf-8">
+  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 
 <body>
 
-<div>
-  <div>
-    Lewa strona
-    <input type="text"/> na timestamp <br>
-    <input type="text"/> inputy na dzien-miesiac-rok - minuta, godzina sekunda
-  </div>
-  <div>
-    Prawa strona
-    Wyswietla sie timestamp<br>
-    Wyswietla sie Dzien miesiac rok - minuta, godzina sekunda
-  </div>
-</div>
+<nav class="navbar navbar-dark bg-dark ">
+  <a class="navbar-brand mx-auto" href="#">Timestamp Converter</a>
+</nav>
 
 
-<div>
-  <input id="box" type="text"/><br/>
-  <p id="date"></p>
+<div class="container">
+  <div class="row">
+
+    <div class="col-md my-3">
+      <div class="card border-secondary">
+        <div class="card-header border-0">
+          Timestamp ➔ Date
+        </div>
+        <div class="card-body">
+          <form action="#" id="timestamp-form">
+            <div class="input-group my-3">
+              <input class="form-control form-control-lg" type="text" placeholder="timestamp" id="timestamp-input"
+                     maxlength="12">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Go!</button>
+              </div>
+            </div>
+          </form>
+
+          <h2 class="mx-3" id="timestamp-to-date-result">&nbsp;</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md my-3">
+      <div class="card border-secondary">
+        <div class="card-header border-0">
+          Date ➔ Timestamp
+        </div>
+        <div class="card-body">
+
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <script>
-  const box = document.querySelector('#box');
-  const date = document.querySelector('#date');
-  box.addEventListener('change', function () {
-    const value = this.value;
-    date.innerHTML = timestampToDate(value);
-  });
+
+  const timestampChanged = (e) => {
+    const timestampValue = document.querySelector('#timestamp-input').value;
+    const timestampToDateResult = document.querySelector('#timestamp-to-date-result');
+    timestampToDateResult.innerHTML = timestampToDate(timestampValue);
+  };
+
+  // dodanie listenerów do inputu i do samego formularza
+  document.getElementById('timestamp-form').addEventListener('submit', timestampChanged);
+  document.getElementById('timestamp-input').addEventListener('change', timestampChanged);
+  document.getElementById('timestamp-input').focus();
 
 
   function timestampToDate(unix_timestamp) {
+    const addLeadingZero = (number) => number < 10 ? `0${number}` : `${number}`;
     const a = new Date(unix_timestamp * 1000);
     const months = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
     const year = a.getFullYear();
     // const month = months[a.getMonth()];
-    const month = a.getMonth();
+    const month = addLeadingZero(a.getMonth());
     const date = a.getDate();
     const hour = a.getHours();
-    const min = a.getMinutes();
-    const sec = a.getSeconds();
+    const min = addLeadingZero(a.getMinutes());
+    const sec = addLeadingZero(a.getSeconds());
     return `${date}.${month}.${year} ${hour}:${min}:${sec}`;
   }
-
 
 </script>
 

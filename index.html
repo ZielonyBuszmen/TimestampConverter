@@ -32,6 +32,7 @@
       <div class="card border-secondary">
         <div class="card-header border-0">
           Timestamp ➔ Date
+          <button type="button" class="btn btn-sm btn-light btn-outline-secondary float-right" onclick="resetForms('timestamp')">Reset</button>
         </div>
         <div class="card-body">
           <form action="#" id="timestamp-form">
@@ -44,25 +45,10 @@
             </div>
           </form>
 
-          <h2 class="mx-3" id="timestamp-to-date-result">&nbsp;</h2>
+          <h2 class="mx-3 my-4" id="timestamp-to-date-result">&nbsp;</h2>
 
-          <div class="btn-group mx-2 my-2" role="group">
-            <button type="button" class="btn btn-sm btn-warning px-3">◀</button>
-            <button type="button" class="btn btn-sm btn-warning disabled">Day</button>
-            <button type="button" class="btn btn-sm btn-warning px-3">▶</button>
-          </div>
+          <hr />
 
-          <div class="btn-group mx-2 my-2" role="group">
-            <button type="button" class="btn btn-sm btn-info px-3">◀</button>
-            <button type="button" class="btn btn-sm btn-info disabled">Month</button>
-            <button type="button" class="btn btn-sm btn-info px-3">▶</button>
-          </div>
-
-          <div class="btn-group mx-2 my-2" role="group">
-            <button type="button" class="btn btn-sm btn-dark px-3">◀</button>
-            <button type="button" class="btn btn-sm btn-dark disabled">Year</button>
-            <button type="button" class="btn btn-sm btn-dark px-3">▶</button>
-          </div>
 
           <div class="btn-group mx-2 my-2" role="group">
             <button type="button" class="btn btn-sm btn-secondary disabled">To start of</button>
@@ -70,7 +56,6 @@
             <button type="button" class="btn btn-sm btn-info">month</button>
             <button type="button" class="btn btn-sm btn-dark">year</button>
           </div>
-
 
 
 
@@ -82,6 +67,8 @@
       <div class="card border-secondary">
         <div class="card-header border-0">
           Date ➔ Timestamp
+          <button type="button" class="btn btn-sm btn-light btn-outline-secondary float-right" onclick="resetForms('date')">Reset</button>
+
         </div>
         <div class="card-body">
           <form action="#" id="date-form" class="form-inline">
@@ -99,7 +86,28 @@
             <button type="button" class="btn btn-warning mx-3">Today</button>
           </form>
 
-          <h2 class="mx-3" id="date-to-timestamp-result">&nbsp;</h2>
+          <h2 class="mx-3 my-3" id="date-to-timestamp-result">&nbsp;</h2>
+
+          <hr />
+
+          <div class="btn-group mx-2 my-2" role="group">
+            <button type="button" class="btn btn-sm btn-warning px-3">◀</button>
+            <button type="button" class="btn btn-sm btn-warning disabled">Day</button>
+            <button type="button" class="btn btn-sm btn-warning px-3">▶</button>
+          </div>
+
+          <div class="btn-group mx-2" role="group">
+            <button type="button" class="btn btn-sm btn-info px-3">◀</button>
+            <button type="button" class="btn btn-sm btn-info disabled">Month</button>
+            <button type="button" class="btn btn-sm btn-info px-3">▶</button>
+          </div>
+
+          <div class="btn-group mx-2 my-2" role="group">
+            <button type="button" class="btn btn-sm btn-dark px-3">◀</button>
+            <button type="button" class="btn btn-sm btn-dark disabled">Year</button>
+            <button type="button" class="btn btn-sm btn-dark px-3">▶</button>
+          </div>
+
         </div>
       </div>
 
@@ -108,6 +116,22 @@
 </div>
 
 <script>
+
+  function resetForms(type) {
+    if (type === 'timestamp') {
+      const input = document.getElementById('timestamp-input');
+      input.value = '';
+      input.focus();
+    } else if (type === 'date') {
+      const day = document.getElementById('date-day');
+      const month = document.getElementById('date-month');
+      const year = document.getElementById('date-year');
+      day.value = '';
+      month.value = '';
+      year.value = '';
+      day.focus();
+    }
+  }
 
   const timestampChanged = (e) => {
     e.preventDefault();

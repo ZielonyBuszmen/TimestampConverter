@@ -22,9 +22,11 @@
 
 <nav class="navbar navbar-dark bg-dark ">
 	<a class="navbar-brand mx-auto" href="#">Timestamp Converter</a>
+	<div class="btn-group mx-auto my-2" role="group">
+		<button type="button" class="btn btn-sm btn-primary" id="utc_button" onClick="UTCToggle('utc')">UTC</button>
+		<button type="button" class="btn btn-sm btn-secondary" id="lt_button" onClick="UTCToggle('lt')">LT</button>
+	</div>
 </nav>
-
-
 <div class="container">
 	<div class="row">
 
@@ -207,6 +209,28 @@
     timestampInput.value = Date.UTC(year, 0) / 1000;
     document.getElementById('goTimestamp').click();
   }
+
+
+  ////// kolorowanie przycisków utc i LT
+  function highlightUTCButton(type) {
+    const secondary = type === 'utc_button' ? 'lt_button' : 'utc_button';
+    const primaryButton = document.getElementById(type);
+    primaryButton.classList.remove('btn-secondary');
+    primaryButton.classList.add('btn-primary');
+    const secondaryButton = document.getElementById(secondary);
+    secondaryButton.classList.remove('btn-primary');
+    secondaryButton.classList.add('btn-secondary');
+  }
+
+  function UTCToggle(type) {
+    if (type === 'utc') {
+      highlightUTCButton('utc_button');
+    }
+    if (type === 'lt') {
+      highlightUTCButton('lt_button');
+    }
+  }
+
 
 </script>
 

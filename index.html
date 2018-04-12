@@ -100,9 +100,9 @@
 					<hr/>
 
 					<div class="btn-group mx-2 my-2" role="group">
-						<button type="button" class="btn btn-sm btn-warning px-3">◀</button>
+						<button type="button" class="btn btn-sm btn-warning px-3" onclick="crementoDay('-')">◀</button>
 						<button type="button" class="btn btn-sm btn-warning disabled">Day</button>
-						<button type="button" class="btn btn-sm btn-warning px-3">▶</button>
+						<button type="button" class="btn btn-sm btn-warning px-3" onclick="crementoDay('+')">▶</button>
 					</div>
 
 					<div class="btn-group mx-2" role="group">
@@ -208,6 +208,18 @@
     const year = a.getUTCFullYear();
     timestampInput.value = Date.UTC(year, 0) / 1000;
     document.getElementById('goTimestamp').click();
+  }
+
+  // day +-, month and year
+  function crementoDay(type) {
+    const day = document.querySelector('#date-day');
+    if (type === '+') {
+      day.value = (parseInt(day.value) || 1) + 1;
+    }
+    else {
+      day.value = (parseInt(day.value) || 1) - 1;
+    }
+    document.getElementById('goDate').click();
   }
 
 

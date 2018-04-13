@@ -35,15 +35,15 @@
 				<div class="card-header border-0">
 					Timestamp ➔ Date
 					<button type="button" class="btn btn-sm btn-light btn-outline-secondary float-right"
-							onclick="resetForms('timestamp')">Reset
+									onclick="resetForms('timestamp')">Reset
 					</button>
 				</div>
 				<div class="card-body">
 					<form action="#" id="timestamp-form">
 						<div class="input-group my-3">
 							<input class="form-control form-control-lg" type="text" placeholder="timestamp"
-								   id="timestamp-input"
-								   maxlength="12">
+										 id="timestamp-input"
+										 maxlength="12">
 							<div class="input-group-append">
 								<button class="btn btn-secondary px-3" type="submit" id="goTimestamp">Go!</button>
 							</div>
@@ -72,7 +72,7 @@
 				<div class="card-header border-0">
 					Date ➔ Timestamp
 					<button type="button" class="btn btn-sm btn-light btn-outline-secondary float-right"
-							onclick="resetForms('date')">Reset
+									onclick="resetForms('date')">Reset
 					</button>
 
 				</div>
@@ -80,19 +80,19 @@
 					<form action="#" id="date-form" class="form-inline">
 						<div class="input-group my-3">
 							<input type="text" class="form-control form-control-lg width-2" maxlength="2"
-								   placeholder="D"
-								   id="date-day">
+										 placeholder="D"
+										 id="date-day">
 							<input type="text" class="form-control form-control-lg width-2" maxlength="2"
-								   placeholder="M"
-								   id="date-month">
+										 placeholder="M"
+										 id="date-month">
 							<input type="text" class="form-control form-control-lg width-4" maxlength="5"
-								   placeholder="Year"
-								   id="date-year">
+										 placeholder="Year"
+										 id="date-year">
 							<div class="input-group-append">
 								<button class="btn btn-secondary px-3" type="submit" id="goDate">Go!</button>
 							</div>
 						</div>
-						<button type="button" class="btn btn-warning mx-3">Today</button>
+						<button type="button" class="btn btn-warning mx-3" onclick="getToday()">Today</button>
 					</form>
 
 					<h2 class="mx-3 my-3" id="date-to-timestamp-result">&nbsp;</h2>
@@ -172,13 +172,12 @@
   document.getElementById('date-form').addEventListener('submit', dateChanged);
   document.getElementById('date-year').addEventListener('change', dateChanged);
 
+  const addLeadingZero = (number) => number < 10 ? `0${number}` : `${number}`;
 
   function timestampToDate(unix_timestamp) {
-    const addLeadingZero = (number) => number < 10 ? `0${number}` : `${number}`;
     const a = new Date(unix_timestamp * 1000);
     const months = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
     const year = a.getUTCFullYear();
-    // const month = months[a.getMonth()];
     const month = addLeadingZero(a.getUTCMonth() + 1); // +1, because returns month from 0
     const date = a.getUTCDate();
     const hour = a.getUTCHours();
@@ -210,7 +209,7 @@
     document.getElementById('goTimestamp').click();
   }
 
-  // day +-, month and year
+  // day, month and year -> increment, decrement
 
   function cremento(element, type, min, max) {
     let value = (parseInt(element.value) || 1);
@@ -238,7 +237,6 @@
   }
 
 
-
   ////// kolorowanie przycisków utc i LT
   function highlightUTCButton(type) {
     const secondary = type === 'utc_button' ? 'lt_button' : 'utc_button';
@@ -259,6 +257,14 @@
     }
   }
 
+  // // przycisk NOW // //
+  function getToday() {
+    const now = new Date();
+    document.getElementById('date-day').value = now.getUTCDate();
+    document.getElementById('date-month').value = addLeadingZero(now.getUTCMonth() + 1);
+    document.getElementById('date-year').value = now.getUTCFullYear();
+    document.getElementById('goDate').click();
+  }
 
 </script>
 

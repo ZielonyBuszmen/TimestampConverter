@@ -106,15 +106,15 @@
 					</div>
 
 					<div class="btn-group mx-2" role="group">
-						<button type="button" class="btn btn-sm btn-info px-3">◀</button>
+						<button type="button" class="btn btn-sm btn-info px-3" onclick="crementoMonth('-')">◀</button>
 						<button type="button" class="btn btn-sm btn-info disabled">Month</button>
-						<button type="button" class="btn btn-sm btn-info px-3">▶</button>
+						<button type="button" class="btn btn-sm btn-info px-3" onclick="crementoMonth('+')">▶</button>
 					</div>
 
 					<div class="btn-group mx-2 my-2" role="group">
-						<button type="button" class="btn btn-sm btn-dark px-3">◀</button>
+						<button type="button" class="btn btn-sm btn-dark px-3" onclick="crementoYear('-')">◀</button>
 						<button type="button" class="btn btn-sm btn-dark disabled">Year</button>
-						<button type="button" class="btn btn-sm btn-dark px-3">▶</button>
+						<button type="button" class="btn btn-sm btn-dark px-3" onclick="crementoYear('+')">▶</button>
 					</div>
 
 				</div>
@@ -211,16 +211,32 @@
   }
 
   // day +-, month and year
-  function crementoDay(type) {
-    const day = document.querySelector('#date-day');
-    if (type === '+') {
-      day.value = (parseInt(day.value) || 1) + 1;
+
+  function cremento(element, type, min, max) {
+    let value = (parseInt(element.value) || 1);
+    value += (type === '+') ? +1 : -1;
+    if (value >= min && value <= max) {
+      element.value = value;
     }
-    else {
-      day.value = (parseInt(day.value) || 1) - 1;
-    }
+    if (min === max) element.value = value; // gdy nie chcemy limitów, np w przypadku roku
     document.getElementById('goDate').click();
   }
+
+  function crementoDay(type) {
+    const element = document.getElementById('date-day');
+    cremento(element, type, 1, 31);
+  }
+
+  function crementoMonth(type) {
+    const element = document.getElementById('date-month');
+    cremento(element, type, 1, 12);
+  }
+
+  function crementoYear(type) {
+    const element = document.getElementById('date-year');
+    cremento(element, type, 0, 0);
+  }
+
 
 
   ////// kolorowanie przycisków utc i LT
